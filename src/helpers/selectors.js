@@ -12,4 +12,13 @@ const getAppointmentsForDay = (state, checkDay) =>{
   return result
 }
 
-module.exports = {getAppointmentsForDay}
+const getInterview = (state, interview) =>{
+  if(interview){
+    const result = {student: interview.student, interviewer: state.interviewers[interview.interviewer]}
+    return result
+  }else{
+    return null
+  }
+}
+
+module.exports = {getAppointmentsForDay, getInterview}
