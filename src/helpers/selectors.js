@@ -21,4 +21,18 @@ const getInterview = (state, interview) =>{
   }
 }
 
-module.exports = {getAppointmentsForDay, getInterview}
+const getInterviewersForDay = (state, checkDay) =>{
+  const result = []
+  let interviewers = []
+  state.days.forEach(day => {
+    if (day.name === checkDay){
+      interviewers = day.interviewers
+    }
+  });
+  interviewers.forEach(interviewer => {
+    result.push(interviewer)
+  });
+  return result
+}
+
+module.exports = {getAppointmentsForDay, getInterview, getInterviewersForDay}
