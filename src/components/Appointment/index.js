@@ -22,7 +22,8 @@ export default function Appointment(props) {
       student: name,
       interviewer
     };
-    props.bookInterview(props, interview)
+    props.bookInterview(props.id, interview)
+    transition(SHOW)
   }
   return( <Fragment>
   <Header time={props.time}/>
