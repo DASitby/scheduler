@@ -24,10 +24,17 @@ export default function Appointment(props) {
       student: name,
       interviewer
     };
+    if(interview.student && interview.interviewer){
     transition(SAVING)
     props.bookInterview(props.id, interview)
     transition(SHOW)
+    }
   }
+
+  const deleter = () => {
+    props.cancelInterview(props.id)
+  }
+
   return( <Fragment>
   <Header time={props.time}/>
   {mode === EMPTY && <Empty onAdd={event => transition(CREATE)} />}
@@ -36,6 +43,7 @@ export default function Appointment(props) {
   <Show
     student={props.interview.student}
     interviewer={props.interview.interviewer}
+    onDelete={event => deleter()}
   />)}
   {mode === CREATE && (
     <Form 
