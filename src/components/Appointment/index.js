@@ -6,6 +6,7 @@ import Show from "./Show"
 import Form from "./Form"
 import Status from "./Status"
 import Confirm from "./Confirm"
+import Error from "./Error"
 import "./styles.scss"
 
 
@@ -18,6 +19,8 @@ export default function Appointment(props) {
   const CONFIRM = "CONFIRM";
   const DELETING = "DELETING"
   const EDIT = "EDIT";
+  const ERROR_SAVE = "ERROR_SAVE"
+  const ERROR_DELETE = "ERROR_DELETE"
 
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
@@ -32,6 +35,7 @@ export default function Appointment(props) {
       transition(SAVING)
       props.bookInterview(props.id, interview)
       .then(()=>transition(SHOW))
+      .catch(()=> transition(ERROR_SAVE))
     }
   }
   const confirm = () => {
@@ -44,6 +48,7 @@ export default function Appointment(props) {
     transition(DELETING)
     props.cancelInterview(props.id)
     .then(()=>transition(EMPTY))
+    .catch(()=>transition(ERROR_DELETE))
   }
   const edit = () => {
     transition(EDIT)
@@ -55,6 +60,8 @@ export default function Appointment(props) {
   {mode === SAVING && <Status message = {"Saving"}/>}
   {mode === DELETING && <Status message = {"Deleting"}/>}  
   {mode === CONFIRM && <Confirm onCancel = {event => cancel()} onConfirm={event => deleter()}/>}
+  {mode === ERROR_SAVE && <Error message={"Could not save try again"} onClose={edit}/>}
+  {mode === ERROR_DELETE && <Error message={"Could not delete, try again"} onClose={cancel}/>}  
   {mode === EDIT && <Form
     student={props.interview.student}
     interviewer={props.interview.interviewer.id}
