@@ -24,6 +24,20 @@ useEffect(() => {
       interviewers:resArray[2].data,})
   })
 }, [])
+
+const spotUpdate = (positive) => {
+  state.days.forEach(element => {
+    if (state.day === element.name){
+      if (positive) {
+        element.spots ++
+      } else {
+        element.spots --
+      }
+    }
+  })
+}
+;
+
 const bookInterview = (id, interview) => {
   const appointment = {
     ...state.appointments[id],
@@ -34,7 +48,10 @@ const bookInterview = (id, interview) => {
     [id]: appointment
   };
   return axios.put(`/api/appointments/${id}`, {interview: appointment.interview})
-  .then(setState({...state, appointments}))
+  .then(() =>{    
+    spotUpdate(false)
+    setState({...state, appointments})
+  })
 }
 const cancelInterview= (id) => {
   const appointment = {
@@ -46,7 +63,10 @@ const cancelInterview= (id) => {
     id: appointment
   }
   return axios.delete(`/api/appointments/${id}`)
-  .then(setState({...state, appointments}))
+  .then(() =>{
+    spotUpdate(true)
+    setState({...state, appointments})
+  })
 }
 return({
   state,
