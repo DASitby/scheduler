@@ -19,6 +19,7 @@ export default function Form(props){
     setInterviewer(null)
   }
   const cancel = () => {
+    validate()
     reset()
     props.onCancel()
   }
