@@ -50,7 +50,7 @@ export default function Appointment(props) {
     transition(EDIT)
   }
 
-  return( <Fragment>
+  return( <article data-testid="appointment">
   <Header time={props.time}/>
   {mode === EMPTY && <Empty onAdd={event => transition(CREATE)} />}
   {mode === SAVING && <Status message = {"Saving"}/>}
@@ -79,6 +79,6 @@ export default function Appointment(props) {
       onSave={save}
     />
   )}
-  </Fragment>
+  </article>
   )
 }
