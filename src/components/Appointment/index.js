@@ -55,7 +55,7 @@ export default function Appointment(props) {
   {mode === EMPTY && <Empty onAdd={event => transition(CREATE)} />}
   {mode === SAVING && <Status message = {"Saving"}/>}
   {mode === DELETING && <Status message = {"Deleting"}/>}  
-  {mode === CONFIRM && <Confirm onCancel = {event => back()} onConfirm={event => deleter()}/>}
+  {mode === CONFIRM && <Confirm onCancel = {event => back()} onConfirm={event => deleter()} message={"Are you sure?"}/>}
   {mode === ERROR_SAVE && <Error message={"Could not save try again"} onClose={back}/>}
   {mode === ERROR_DELETE && <Error message={"Could not delete, try again"} onClose={back}/>}  
   {mode === EDIT && <Form
