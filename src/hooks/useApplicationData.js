@@ -6,7 +6,6 @@ const [state, setState] = useState({
   day: "Monday",
   days: [],
   appointments: {},
-  interviewer: "Sylvia Palmer",
   interviewers: {}
 });
 const setDay = day => setState({ ...state, day });
@@ -18,25 +17,27 @@ useEffect(() => {
     axios.get(`/api/interviewers`)
   ])
   .then(resArray => {
-    setState({...state, 
+    setState(prev=> ({...prev, 
       days: resArray[0].data, 
       appointments: resArray[1].data, 
-      interviewers:resArray[2].data,})
+      interviewers:resArray[2].data,}))
   })
 }, [])
 
-const spotUpdate = (positive) => {
-  state.days.forEach(element => {
-    if (state.day === element.name){
-      if (positive) {
-        element.spots ++
-      } else {
-        element.spots --
-      }
+const findDay = (appointments) => {
+  const dayOfWeek = state.days.find((day) => day.name === state.day);
+  let counter = 0;
+  dayOfWeek.appointments.forEach((id) => {
+    if (appointments[id].interview === null) {
+      counter++;
     }
-  })
+  });
+  const newDay = { ...dayOfWeek, spots: counter };
+  const newDayArray = [...state.days];
+  newDayArray[dayOfWeek.id - 1] = newDay;
+
+  return newDayArray;
 }
-;
 
 const bookInterview = (id, interview) => {
   const appointment = {
@@ -47,10 +48,10 @@ const bookInterview = (id, interview) => {
     ...state.appointments,
     [id]: appointment
   };
+  const days = findDay(appointments)
   return axios.put(`/api/appointments/${id}`, {interview: appointment.interview})
   .then(() =>{    
-    spotUpdate(false)
-    setState({...state, appointments})
+    setState({...state, appointments, days})
   })
 }
 const cancelInterview= (id) => {
@@ -60,12 +61,12 @@ const cancelInterview= (id) => {
   }
   const appointments = {
     ...state.appointments,
-    id: appointment
+    [id]: appointment
   }
+  const days = findDay(appointments)
   return axios.delete(`/api/appointments/${id}`)
   .then(() =>{
-    spotUpdate(true)
-    setState({...state, appointments})
+    setState({...state, appointments,days})
   })
 }
 return({
