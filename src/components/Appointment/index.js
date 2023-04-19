@@ -51,34 +51,31 @@ export default function Appointment(props) {
   }
 
   return( <article data-testid="appointment">
-  <Header time={props.time}/>
-  {mode === EMPTY && <Empty onAdd={event => transition(CREATE)} />}
-  {mode === SAVING && <Status message = {"Saving"}/>}
-  {mode === DELETING && <Status message = {"Deleting"}/>}  
-  {mode === CONFIRM && <Confirm onCancel = {event => back()} onConfirm={event => deleter()} message={"Are you sure?"}/>}
-  {mode === ERROR_SAVE && <Error message={"Could not save try again"} onClose={back}/>}
-  {mode === ERROR_DELETE && <Error message={"Could not delete, try again"} onClose={back}/>}  
-  {mode === EDIT && <Form
-    student={props.interview.student}
-    interviewer={props.interview.interviewer.id}
-    onCancel={event => back()}
-    interviewers={props.interviewers}
-    onSave={save}
-   />}
-  {mode === SHOW && (
-  <Show
-    student={props.interview.student}
-    interviewer={props.interview.interviewer}
-    onDelete={event => confirm()}
-    onEdit={event => edit()}
-  />)}
-  {mode === CREATE && (
-    <Form 
+    <Header time={props.time}/>
+    {mode === EMPTY && <Empty onAdd={event => transition(CREATE)} />}
+    {mode === SAVING && <Status message = {"Saving"}/>}
+    {mode === DELETING && <Status message = {"Deleting"}/>}  
+    {mode === CONFIRM && <Confirm onCancel = {event => back()} onConfirm={event => deleter()} message={"Are you sure?"}/>}
+    {mode === ERROR_SAVE && <Error message={"Could not save try again"} onClose={back}/>}
+    {mode === ERROR_DELETE && <Error message={"Could not delete, try again"} onClose={back}/>}  
+    {mode === EDIT && <Form
+      student={props.interview.student}
+      interviewer={props.interview.interviewer.id}
       onCancel={event => back()}
       interviewers={props.interviewers}
       onSave={save}
-    />
-  )}
+     />}
+    {mode === SHOW && <Show
+      student={props.interview.student}
+      interviewer={props.interview.interviewer}
+      onDelete={event => confirm()}
+      onEdit={event => edit()}
+    />}
+    {mode === CREATE && <Form 
+      onCancel={event => back()}
+      interviewers={props.interviewers}
+      onSave={save}
+    />}
   </article>
   )
 }

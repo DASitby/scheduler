@@ -40,18 +40,21 @@ export default function Form(props){
   <section className="appointment__card-left">
     <form autoComplete="off">
       <input
-        className="appointment__create-input text--semi-bold"
-        name="name"
-        value={student}
-        type="text"
-        placeholder="Enter student name here"
-        onChange={event => setStudent(event.target.value)}
-        data-testid="student-name-input"
+      className="appointment__create-input text--semi-bold"
+      name="name"
+      value={student}
+      type="text"
+      placeholder="Enter student name here"
+      onChange={event => setStudent(event.target.value)}
+      data-testid="student-name-input"
       />
     </form>
     <section className="appointment__validation">{error}</section>
-    <InterviewerList interviewers = {interviewers} student={student} value={interviewer}
-    onChange={setInterviewer}/>
+    <InterviewerList 
+      interviewers = {interviewers} 
+      student={student} 
+      value={interviewer}
+      onChange={setInterviewer}/>
   </section>
   <section className="appointment__card-right">
     <section className="appointment__actions">
