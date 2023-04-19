@@ -28,40 +28,40 @@ export default function Application(props) {
   return (
     <main className="layout">
       <section className="sidebar">
-        {
-          <>
-            <img
-              className="sidebar--centered"
-              src="images/logo.png"
-              alt="Interview Scheduler"
+        {<>
+          <img
+          className="sidebar--centered"
+          src="images/logo.png"
+          alt="Interview Scheduler"/>
+          <hr className="sidebar__separator sidebar--centered" />
+          <nav className="sidebar__menu">
+            <DayList 
+              days={state.days} 
+              value={state.day} 
+              onChange={setDay}
             />
-            <hr className="sidebar__separator sidebar--centered" />
-            <nav className="sidebar__menu">
-            <DayList days={state.days} value={state.day} onChange={setDay}/>
-            </nav>
-            <img
-              className="sidebar__lhl sidebar--centered"
-              src="images/lhl.png"
-              alt="Lighthouse Labs"
-            />
-          </>
-        }
+          </nav>
+          <img
+          className="sidebar__lhl sidebar--centered"
+          src="images/lhl.png"
+          alt="Lighthouse Labs"/>
+        </>}
       </section>
       <section className="schedule">
         {Object.values(dailyAppointments).map(appointment =>{
-           const interview = getInterview(state, appointment.interview);
+          const interview = getInterview(state, appointment.interview);
           return(
             <Appointment 
-            key={appointment.id}
-            id={appointment.id}
-            time={appointment.time}
-            interview={interview}
-            interviewers={dailyInterviewers}
-            bookInterview={bookInterview}
-            cancelInterview={cancelInterview}
-          />
+              key={appointment.id}
+              id={appointment.id}
+              time={appointment.time}
+              interview={interview}
+              interviewers={dailyInterviewers}
+              bookInterview={bookInterview}
+              cancelInterview={cancelInterview}
+            />
           )
-         })}
+        })}
       </section>
     </main>
   );
