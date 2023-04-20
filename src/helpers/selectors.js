@@ -21,17 +21,26 @@ const getInterview = (state, interview) =>{
   }
 }
 
-const getInterviewersForDay = (state, checkDay) =>{
-  const result = []
-  let interviewers = []
+const getInterviewersForDay = (state, checkDay) => {
+  let result = []
+  let activeDay = {}
   state.days.forEach(day => {
     if (day.name === checkDay){
-      interviewers = day.interviewers
+      activeDay = {...day}
     }
   });
-  interviewers.forEach(interviewer => {
-    result.push(interviewer)
-  });
+  console.log("activeDay", activeDay)
+  const dayInterviewers = activeDay.interviewers
+  console.log(dayInterviewers)
+  console.log("interviewers", state.interviewers)
+  for (const id in state.interviewers) {
+    if (Object.hasOwnProperty.call(state.interviewers, id)) {
+      const element = state.interviewers[id];
+      if (dayInterviewers.includes(element.id)){
+        result.push(element)
+      }
+    }
+  }
   return result
 }
 
