@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import DayList from "./DayList";
 import { getAppointmentsForDay, getInterview, getInterviewersForDay} from "helpers/selectors";
 import "components/Application.scss";
@@ -9,7 +9,6 @@ export default function Application(props) {
   const {
     state,
     setDay,
-    setInterviewer,
     bookInterview,
     cancelInterview
   } = useApplicationData();
